@@ -7,13 +7,14 @@ import { signUpSchema } from "@/schemas/auth/signUpSchema";
 import { ApiResponse } from "@/utils/ApiResponse";
 
 export async function POST(request: NextRequest) {
+  // Establish database connection
   await dbConnect();
 
   try {
     // Parse request body
     const body = await request.json();
 
-    // Validate request body
+    // Validate request data
     const result = signUpSchema.safeParse(body);
 
     if (!result.success) {
@@ -26,10 +27,11 @@ export async function POST(request: NextRequest) {
     // Extract validated data
     const { username, email, password } = result.data;
 
+    // Normalize username and email
     const normalizedUsername = username.trim().toLowerCase();
     const normalizedEmail = email.trim().toLowerCase();
 
-    // Check if username is already taken
+    // Check if the username is already taken by another account
     const existingUsername = await UserModel.findOne({
       username: normalizedUsername,
     });
@@ -41,7 +43,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if email already exists
+    // Check if an account already exists with the provided email
     const existingUserByEmail = await UserModel.findOne({
       email: normalizedEmail,
     });
@@ -53,14 +55,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate secure 6-digit verification code
+    // Generate a secure six-digit verification code
     const verifyCode = crypto.randomInt(100000, 1000000).toString();
 
-    // Verification code expires in 1 hour
+    // Set verification code expiry time (1 hour)
     const verifyCodeExpiry = new Date(Date.now() + 60 * 60 * 1000);
 
     if (existingUserByEmail) {
-      // Update existing unverified account
+      // Update the existing unverified account
       existingUserByEmail.username = normalizedUsername;
       existingUserByEmail.password = password;
       existingUserByEmail.verifyCode = verifyCode;
@@ -68,7 +70,7 @@ export async function POST(request: NextRequest) {
 
       await existingUserByEmail.save();
     } else {
-      // Create new account
+      // Create a new user account
       const newUser = new UserModel({
         username: normalizedUsername,
         email: normalizedEmail,
@@ -96,6 +98,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // Return success response
     return NextResponse.json(
       new ApiResponse(
         201,
@@ -104,9 +107,10 @@ export async function POST(request: NextRequest) {
       { status: 201 },
     );
   } catch (error: unknown) {
+    // Log unexpected server errors
     console.error("Signup Error:", error);
 
-    // Handle duplicate key errors
+    // Handle MongoDB duplicate key errors
     if (
       typeof error === "object" &&
       error !== null &&
@@ -119,6 +123,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Return generic server error
     return NextResponse.json(new ApiResponse(500, "Internal Server Error"), {
       status: 500,
     });

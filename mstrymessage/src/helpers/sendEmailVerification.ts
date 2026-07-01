@@ -3,12 +3,14 @@ import VerificationEmail from "../../emails/VerificationEmail";
 import { ApiResponse } from "@/utils/ApiResponse";
 import { ApiError } from "@/utils/ApiError";
 
+// Send email verification OTP to the user
 export async function sendVerificationEmail(
   email: string,
   username: string,
-  verifyCode: string
+  verifyCode: string,
 ): Promise<ApiResponse<null>> {
   try {
+    // Send verification email using Resend
     await resend.emails.send({
       from: "onboarding@resend.dev",
       to: email,
@@ -19,13 +21,13 @@ export async function sendVerificationEmail(
       }),
     });
 
+    // Return success response
     return new ApiResponse(200, "Verification email sent successfully");
   } catch (error) {
+    // Log the error for debugging
     console.error(error);
 
-    throw new ApiError(
-      500,
-      "Failed to send verification email"
-    );
+    // Throw a custom API error
+    throw new ApiError(500, "Failed to send verification email");
   }
 }

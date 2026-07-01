@@ -1,3 +1,4 @@
+// Standard API response structure
 export class ApiResponse<T = unknown> {
   statusCode: number;
   success: boolean;
@@ -9,13 +10,13 @@ export class ApiResponse<T = unknown> {
     message: string = "Success",
     data: T | null = null,
   ) {
+    // Initialize response properties
     this.statusCode = statusCode;
     this.success = statusCode < 400;
     this.message = message;
     this.data = data;
   }
 }
-
 
 // export class ApiResponse<T = unknown> {
 //   constructor(
