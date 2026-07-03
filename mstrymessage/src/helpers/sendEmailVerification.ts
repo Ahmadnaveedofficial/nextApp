@@ -1,5 +1,5 @@
 import { resend } from "@/utils/resend";
-import VerificationEmail from "../../emails/VerificationEmail";
+import VerificationEmail from "../services/emails/VerificationEmail";
 import { ApiResponse } from "@/utils/ApiResponse";
 import { ApiError } from "@/utils/ApiError";
 
