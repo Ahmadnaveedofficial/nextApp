@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
       { isAcceptingMessage },
-      { new: true },
+      { returnDocument: "after" },
     );
 
     // Return if the user does not exist

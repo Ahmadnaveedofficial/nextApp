@@ -10,9 +10,8 @@ export class ApiResponse<T = unknown> {
     message: string = "Success",
     data: T | null = null,
   ) {
-    // Initialize response properties
     this.statusCode = statusCode;
-    this.success = statusCode < 400;
+    this.success = statusCode >= 200 && statusCode < 400;
     this.message = message;
     this.data = data;
   }

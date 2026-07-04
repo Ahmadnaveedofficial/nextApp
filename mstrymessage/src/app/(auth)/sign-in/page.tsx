@@ -43,10 +43,7 @@ import TextInput from "@/components/auth/TextInput";
 // ==========================================
 // Schemas
 // ==========================================
-import {
-  signInSchema,
-  SignInSchema,
-} from "@/schemas/auth/signInSchema";
+import { signInSchema, SignInSchema } from "@/schemas/auth/signInSchema";
 
 // ==========================================
 // Sign In Page
@@ -112,7 +109,7 @@ const SignInPage = () => {
       setIsSubmitting(false);
     }
   };
-    return (
+  return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_top,#312e81_0%,#0f172a_35%,#020617_100%)] px-4 py-10">
       {/* ==========================================
           Background Blur Effects
@@ -135,10 +132,7 @@ const SignInPage = () => {
             Sign In Form
         ========================================== */}
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {/* ==============================
                 Identifier Field
             ============================== */}
@@ -176,9 +170,7 @@ const SignInPage = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-slate-200">
-                    Password
-                  </FormLabel>
+                  <FormLabel className="text-slate-200">Password</FormLabel>
 
                   <PasswordInput
                     {...field}
