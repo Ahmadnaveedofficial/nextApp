@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/database/dbConfig";
-import { sendVerificationEmail } from "@/helpers/sendEmailVerification";
+import { sendVerificationEmail } from "@/services/emails/sendEmailVerification";
 import UserModel from "@/models/user.model";
 import { signUpSchema } from "@/schemas/auth/signUpSchema";
 import { ApiResponse } from "@/utils/ApiResponse";
