@@ -342,8 +342,10 @@ This project helped strengthen practical experience with:
 
 Developed collaboratively by:
 
-- Ahmad Naveed
-- Project Partner
+- [Ahmad Naveed](https://github.com/Ahmadnaveedofficial)
+- [Muhammad Ibraheem](https://github.com/IbraheemxDev)
+
+---
 
 ---
 
